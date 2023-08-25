@@ -14,7 +14,7 @@ const Icones = styled.ul`
 
 const icones = [perfil, sacola];
 
-function InconeHeader() {
+function IconesHeader() {
   return (
     <Icones>
       {icones.map((icone) => (
@@ -26,4 +26,4 @@ function InconeHeader() {
   );
 }
 
-export default InconeHeader;
+export default IconesHeader;
