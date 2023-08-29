@@ -1,14 +1,15 @@
 import Input from "../Input";
 import styled from "styled-components";
-import { useState } from "react";
-import { livros } from "./dadosPesquisa";
+import { useEffect, useState } from "react";
+import { getLivros } from "../../servicos/livros";
+
 
 const PesquisaContainer = styled.section`
   background-image: linear-gradient(90deg, #002f52 35%, #326589 165%);
   color: #fff;
   text-align: center;
   padding: 85px 0;
-  height: 270px;
+  height: auto;
   width: 100%;
 `;
 
@@ -44,6 +45,16 @@ const Resultado = styled.div`
 
 function Pesquisa() {
   const [livrosPesquisados, setLivrosPesquisados] = useState([]);
+  const [livros, setLivros] = useState([]);
+
+  useEffect(() => { 
+    fetchLivros()
+  }, [])
+
+  async function fetchLivros() {//pega os livros da api e coloca no estado
+    const livrosDaAPI = await getLivros()
+    setLivros(livrosDaAPI)
+  }
 
   return (
     <PesquisaContainer>
@@ -53,9 +64,7 @@ function Pesquisa() {
         placeholder="Escreva sua próxima leitura"
         onBlur={(evento) => {
           const textoDigitado = evento.target.value;
-          const resultadoPesquisa = livros.filter((livro) =>
-            livro.nome.includes(textoDigitado)
-          );
+          const resultadoPesquisa = livros.filter((livro) => livro.nome.includes(textoDigitado));
           setLivrosPesquisados(resultadoPesquisa);
         }}
       />
